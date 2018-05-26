@@ -7,7 +7,7 @@ def hello():
     #return "Hello tongue twisters!"
     name="Peter Piper Pan"
     tongueTwisters = ["she sells sea shells", "peter piper pan likes pokemon"]
-    return render_template("index.html", name=name, list=tongueTwister)
+    return render_template("index.html", name=name, list=tongueTwisters)
 
 @app.route("/anotherPage")
 def hello1():
