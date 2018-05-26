@@ -6,7 +6,8 @@ app = Flask(__name__)
 def hello():
     #return "Hello tongue twisters!"
     name="Peter Piper Pan"
-    return render_template("index.html", name=name)
+    tongueTwisters = ["she sells sea shells", "peter piper pan likes pokemon"]
+    return render_template("index.html", name=name, list=tongueTwister)
 
 @app.route("/anotherPage")
 def hello1():
