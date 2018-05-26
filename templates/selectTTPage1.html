@@ -5,13 +5,10 @@
 	<meta name="description" content="">
 	<meta name="keywords" content="">
 	<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-	<!-- <script src="./index_files/jquery.dropotron.min.js.download"></script>
-	<script src="./index_files/jquery.scrollgress.min.js.download"></script>
-	<script src="./index_files/jquery.scrolly.min.js.download"></script>
-	<script src="./index_files/jquery.slidertron.min.js.download"></script> -->
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>
+	
 	<style type="text/css">.row{border-bottom:solid 1px transparent}.row>*{float:left}.row:after,.row:before{content:"";display:block;clear:both;height:0}.row.uniform>*>:first-child{margin-top:0}.row.uniform>*>:last-child{margin-bottom:0}.\31 2u,.\31 2u\24{width:100%;clear:none}.\31 1u,.\31 1u\24{width:91.6666666667%;clear:none}.\31 0u,.\31 0u\24{width:83.3333333333%;clear:none}.\39 u,.\39 u\24{width:75%;clear:none}.\38 u,.\38 u\24{width:66.6666666667%;clear:none}.\37 u,.\37 u\24{width:58.3333333333%;clear:none}.\36 u,.\36 u\24{width:50%;clear:none}.\35 u,.\35 u\24{width:41.6666666667%;clear:none}.\34 u,.\34 u\24{width:33.3333333333%; clear: none}.\33 u,.\33 u\24{width:25%;clear:none}.\32 u,.\32 u\24{width:16.6666666667%;clear:none}.\31 u,.\31 u\24{width:8.3333333333%;clear:none}.\31 2u\24+*,.\31 1u\24+*,.\31 0u\24+*,.\39 u\24+*,.\38 u\24+*,.\37 u\24+*,.\36 u\24+*,.\35 u\24+*,.\34 u\24+*,.\33 u\24+*,.\32 u\24+*.\31 u\24+*{clear:left;}.\-11u{margin-left:91.6666666667%}.\-10u{margin-left:83.3333333333%}.\-9u{margin-left:75%}.\-8u{margin-left:66.6666666667%}.\-7u{margin-left:58.3333333333%}.\-6u{margin-left:50%}.\-5u{margin-left:41.6666666667%}.\-4u{margin-left:33.3333333333%}.\-3u{margin-left:25%}.\-2u{margin-left:16.6666666667%}.\-1u{margin-left:8.3333333333%}</style><link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"><link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-xlarge.css')}}"><link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-large.css') }}""><style type="text/css">.row>*{padding:0px 0 0 1.5em}.row{margin:0px 0 0 -1.5em}.row.uniform>*{padding:1.5em 0 0 1.5em}.row.uniform{margin:-1.5em 0 0 -1.5em}.row.\32 00\25>*{padding:0px 0 0 3em}.row.\32 00\25{margin:0px 0 0 -3em}.row.uniform.\32 00\25>*{padding:3em 0 0 3em}.row.uniform.\32 00\25{margin:-3em 0 0 -3em}.row.\31 50\25>*{padding:0px 0 0 2.25em}.row.\31 50\25{margin:0px 0 0 -2.25em}.row.uniform.\31 50\25>*{padding:2.25em 0 0 2.25em}.row.uniform.\31 50\25{margin:-2.25em 0 0 -2.25em}.row.\35 0\25>*{padding:0px 0 0 0.75em}.row.\35 0\25{margin:0px 0 0 -0.75em}.row.uniform.\35 0\25>*{padding:0.75em 0 0 0.75em}.row.uniform.\35 0\25{margin:-0.75em 0 0 -0.75em}.row.\32 5\25>*{padding:0px 0 0 0.375em}.row.\32 5\25{margin:0px 0 0 -0.375em}.row.uniform.\32 5\25>*{padding:0.375em 0 0 0.375em}.row.uniform.\32 5\25{margin:-0.375em 0 0 -0.375em}.row.\30 \25>*{padding:0}.row.\30 \25{margin:0}</style><style type="text/css">body{min-width:960px}.container{margin-left:auto;margin-right:auto;width:960px}.container.\31 25\25{width:100%;max-width:1200px;min-width:960}.container.\37 5\25{width:720px}.container.\35 0\25{width:480px}.container.\32 5\25{width:240px}</style><style type="text/css">.\31 2u\28 1\29,.\31 2u\24\28 1\29{width:100%;clear:none}.\31 1u\28 1\29,.\31 1u\24\28 1\29{width:91.6666666667%;clear:none}.\31 0u\28 1\29,.\31 0u\24\28 1\29{width:83.3333333333%;clear:none}.\39 u\28 1\29,.\39 u\24\28 1\29{width:75%;clear:none}.\38 u\28 1\29,.\38 u\24\28 1\29{width:66.6666666667%;clear:none}.\37 u\28 1\29,.\37 u\24\28 1\29{width:58.3333333333%;clear:none}.\36 u\28 1\29,.\36 u\24\28 1\29{width:50%;clear:none}.\35 u\28 1\29,.\35 u\24\28 1\29{width:41.6666666667%;clear:none}.\34 u\28 1\29,.\34 u\24\28 1\29{width:33.3333333333%; clear: none}.\33 u\28 1\29,.\33 u\24\28 1\29{width:25%;clear:none}.\32 u\28 1\29,.\32 u\24\28 1\29{width:16.6666666667%;clear:none}.\31 u\28 1\29,.\31 u\24\28 1\29{width:8.3333333333%;clear:none}.\31 2u\24\28 1\29+*,.\31 1u\24\28 1\29+*,.\31 0u\24\28 1\29+*,.\39 u\24\28 1\29+*,.\38 u\24\28 1\29+*,.\37 u\24\28 1\29+*,.\36 u\24\28 1\29+*,.\35 u\24\28 1\29+*,.\34 u\24\28 1\29+*,.\33 u\24\28 1\29+*,.\32 u\24\28 1\29+*.\31 u\24\28 1\29+*{clear:left;}.\-11u{margin-left:91.6666666667%}.\-10u{margin-left:83.3333333333%}.\-9u{margin-left:75%}.\-8u{margin-left:66.6666666667%}.\-7u{margin-left:58.3333333333%}.\-6u{margin-left:50%}.\-5u{margin-left:41.6666666667%}.\-4u{margin-left:33.3333333333%}.\-3u{margin-left:25%}.\-2u{margin-left:16.6666666667%}.\-1u{margin-left:8.3333333333%}</style><style type="text/css">.not-global,.not-xlarge,.not-large{display:none!important}.only-medium,.only-small,.only-xsmall{display:none!important}</style>
 </head>
 <body class="landing"><div id="skel-layers-wrapper" style="position: center; left: 0px; right: 0px; top: 0px;">
@@ -26,28 +23,36 @@
 			<h2>Select a Tongue Twister from Below</h2>
 
 			<div class="listO">
-	  <ul>
-	    <li class="tt"><a href="#">Zurich</a></li>
+				<ul>
+					<li class="tt"><a href="#">How much wood could Chuck Woods' woodchuck chuck, if Chuck Woods' woodchuck could and would chuck wood? 
+					</a></li>
+					<li class="tt"><a href="#">Pete's pa pete poked to the pea patch to pick a peck of peas for the poor pink pig in the pine hole pig-pen</a></li>
+					<li class="tt"><a href="#">How many cans can a cannibal nibble
+						if a cannibal can nibble cans?
+						As many cans as a cannibal can nibble
+					if a cannibal can nibble cans</a></li>
+					<li class="tt"><a href="#">Tie twine to three tree twigs.</a></li>
+					<li class="tt"><a href="#">Green glass globes glow greenly</a></li>
 
-	  </ul>
+				</ul>
 
-		
-	</div>
 
-	<ul class="actions">
-		<li><a href="/selectPage2" class="button big scrolly">Next Page</a></li>
-		<li><a href="/" class="button big scrolly">Home</a></li>
+			</div>
 
-	</ul>
+			<ul class="actions">
+				<li><a href="/selectPage2" class="button big scrolly">Next Page</a></li>
+				<li><a href="/" class="button big scrolly">Home</a></li>
+
+			</ul>
 		</div>
 	</section>
 
 	<script>
-	$(".tt > a").on('click', function(e) {
-  var ttName = $(this).text();
-  $("#clicked").text(ttName);
-	})
+		$(".tt > a").on('click', function(e) {
+			var ttName = $(this).text();
+			$("#clicked").text(ttName);
+		})
 	</script>
 
 
-</html>
+	</html>

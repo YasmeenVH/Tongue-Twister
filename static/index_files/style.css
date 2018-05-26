@@ -1255,7 +1255,7 @@ li:last-child {
 
 li a {
   text-decoration: none;
-  color: #000;
+  color: #ffffff;
   display: block;
   width: 1200px;
 
@@ -1267,8 +1267,8 @@ li a {
 }
 
 li a:hover {
-  font-size: 30px;
-  background: #f6f6f6;
+  font-size: 25px;
+  background: #e5d3d3;
 }
 	#banner {
 		background-attachment: fixed;
