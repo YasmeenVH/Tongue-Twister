@@ -1,48 +1,40 @@
 import io
 import os
-import argparse
-import numpy as np
 
-# Imports the Google Cloud client library
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
-from pydub import AudioSegment
-from pydub.silence import split_on_silence
-
 
 
 
 def speech_to_text(speech_file):
     client = speech.SpeechClient()
 
+    config = types.RecognitionConfig(
+        encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+        language_code='en-US',
+        sample_rate_hertz=18000,
+        speech_contexts=[speech.types.SpeechContext(
+            phrases=["sheshells", "sheshore"],
+        )]
+    )
+
     file_name = os.path.join(
         os.path.dirname(__file__),
         'audio_files',
         speech_file)
 
-    with io.open(file_name, 'rb') as audio_file:
-        content = audio_file.read()
-
-    stream = [content]
-
-    requests = (types.StreamingRecognizeRequest(audio_content=chunk)
-                for chunk in stream)
-
-    config = types.RecognitionConfig(
-        encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
-        sample_rate_hertz=18000,
-        language_code='en-US'
-        )
-     #   speech_contexts=phrase_hints)
+    with io.open(file_name, 'rb') as stream:
+        requests = [speech.types.StreamingRecognizeRequest(
+            audio_content=stream.read(),
+        )]
     streaming_config = types.StreamingRecognitionConfig(config=config,
-                                           interim_results=True)
+                                                        interim_results=True)
 
     responses = client.streaming_recognize(streaming_config, requests)
 
-    result_array=[]
-    result_string=None
-
+    list_res = []
+    string_res = ""
     for response in responses:
         # Once the transcription has settled, the first result will contain the
         # is_final result. The other results will be for subsequent portions of
@@ -55,20 +47,9 @@ def speech_to_text(speech_file):
             for alternative in alternatives:
                 print('Confidence: {}'.format(alternative.confidence))
                 print(u'Transcript: {}'.format(alternative.transcript))
-                result_array.append(alternative.transcript.split())
-                result_string=alternative.transcript
-
-                for word_info in alternative.words:
-                    word = word_info.word
-                    start_time = word_info.start_time
-                    end_time = word_info.end_time
-                    print('Word: {}, start_time: {}, end_time: {}'.format(
-                        word,
-                        start_time.seconds + start_time.nanos * 1e-9,
-                        end_time.seconds + end_time.nanos * 1e-9))
-
-    return [result_string, result_array]
-
+                list_res.append(alternative.transcript.split())
+                string_res = alternative.transcript
+    return [string_res, list_res]
 
 
 def find_error(target, transcription, improve_sound):
@@ -93,52 +74,71 @@ def find_error(target, transcription, improve_sound):
 
 
 
+
+    # # Instantiates a client
+    # client = speech.SpeechClient()
+    #
+    # # The name of the audio file to transcribe
+    # file_name = os.path.join(
+    #     os.path.dirname(__file__),
+    #     'audio_files',
+    #     name)
+    #
+    # # Loads the audio into memory
+    # with io.open(file_name, 'rb') as audio_file:
+    #     content = audio_file.read()
+    #     audio = types.RecognitionAudio(content=content)
+    #
+    # # In practice, stream should be a generator yielding chunks of audio data.
+    # stream = [content]
+    # requests = (types.StreamingRecognizeRequest(audio_content=chunk)
+    #             for chunk in stream)
+    #
+    # config = types.RecognitionConfig(
+    #     encoding='LINEAR16',
+    #     sample_rate_hertz=16000,
+    #     language_code='en-US'
+    #     # speech_contexts=[speech.types.SpeechContext(
+    #     #     phrases=["sheshells by the sheshore"],
+    #     # )]
+    #     )
+    #  #   speech_contexts=phrase_hints)
+    # streaming_config = types.StreamingRecognitionConfig(config=config)
+    #
+    # # partial_result = types.StreamingRecognitionResult()
+    #
+    # # streaming_recognize returns a generator.
+    # responses = client.streaming_recognize(streaming_config, requests)
+    #
+    # for response in responses:
+    #     # Once the transcription has settled, the first result will contain the
+    #     # is_final result. The other results will be for subsequent portions of
+    #     # the audio.
+    #     for result in response.results:
+    #         print('Finished: {}'.format(result.is_final))
+    #         print('Stability: {}'.format(result.stability))
+    #         alternatives = result.alternatives
+    #         # The alternatives are ordered from most likely to least.
+    #         for alternative in alternatives:
+    #             print('Confidence: {}'.format(alternative.confidence))
+    #             print(u'Transcript: {}'.format(alternative.transcript))
+    #             return alternative.transcript
+
+                # for word_info in alternative.words:
+                #     word = word_info.word
+                #     start_time = word_info.start_time
+                #     end_time = word_info.end_time
+                #     print('Word: {}, start_time: {}, end_time: {}'.format(
+                #         word,
+                #         start_time.seconds + start_time.nanos * 1e-9,
+                #         end_time.seconds + end_time.nanos * 1e-9))
+
+
+
 actual = speech_to_text('correct.wav')
 test = speech_to_text('wrong.wav')
 
 print(find_error(actual, test, ["sh", "se"]))
-
-
-# speech_contexts=[speech.types.SpeechContext(
-#     phrases=["sheshells by the sheshore"],
-# )]
-
-
-
-
-# # Each result is for a consecutive portion of the audio. Iterate through
-# # them to get the transcripts for the entire audio file.
-# for result in response.results:
-#     # The first alternative is the most likely one for this portion.
-#     print(u'Transcript: {}'.format(result.alternatives[0].transcript))
-#     # print(u'Transcript: {}'.format(result.alternatives[1].transcript))
-#     # print(u'Transcript: {}'.format(result.alternatives[2].transcript))
-# return result.alternatives[0].transcript
-
-
-# print(find_error('she sells seashells by the seashore', speech_to_text('correct.wav')))
-
-
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser(
-#         description=__doc__,
-#         formatter_class=argparse.RawDescriptionHelpFormatter)
-#     parser.add_argument('stream', help='File to stream to the API')
-#     args = parser.parse_args()
-#     print(args)
-#     speech_to_text(args.stream)
-
-
-
-
-
-
-# speech_contexts=[speech.types.SpeechContext(
-#     phrases=["sheshells", "sheshore"],
-# )]
-
-
-
 # sound_file=AudioSegment.from_wav(file_name)
 # # samples = np.array(sound_file.get_array_of_samples())
 # #
@@ -222,5 +222,62 @@ print(find_error(actual, test, ["sh", "se"]))
 #                     start_time.seconds + start_time.nanos * 1e-9,
 #                     end_time.seconds + end_time.nanos * 1e-9))
 
+# client = speech.SpeechClient()
+#
+# file_name = os.path.join(
+#     os.path.dirname(__file__),
+#     'audio_files',
+#     speech_file)
+#
+# with io.open(file_name, 'rb') as audio_file:
+#     content = audio_file.read()
+#
+# audio = types.RecognitionAudio(content=content)
+# config = types.RecognitionConfig(
+#     encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+#     sample_rate_hertz=16000,
+#     language_code='en-US')
+#
+# response = client.recognize(config, audio)
+# # Each result is for a consecutive portion of the audio. Iterate through
+# # them to get the transcripts for the entire audio file.
+# for result in response.results:
+#     # The first alternative is the most likely one for this portion.
+#     print(u'Transcript: {}'.format(result.alternatives[0].transcript))
 
-# Instantiates a client
+
+#
+# # Instantiates a client
+# client = speech.SpeechClient()
+#
+# # The name of the audio file to transcribe
+# file_name = os.path.join(
+#     os.path.dirname(__file__),
+#     'audio_files',
+#     speech_file)
+#
+# # Loads the audio into memory
+# with io.open(file_name, 'rb') as audio_file:
+#     content = audio_file.read()
+#
+# # In practice, stream should be a generator yielding chunks of audio data.
+# stream = [content]
+# requests = (types.StreamingRecognizeRequest(audio_content=chunk)
+#             for chunk in stream)
+#
+# config = types.RecognitionConfig(
+#     encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+#     sample_rate_hertz=18000,
+#     language_code='en-US'
+#     # speech_contexts=[speech.types.SpeechContext(
+#     #     phrases=["sheshells by the sheshore"],
+#     # )]
+# )
+# #   speech_contexts=phrase_hints)
+# streaming_config = types.StreamingRecognitionConfig(config=config,
+#                                                     interim_results=True)
+#
+# # partial_result = types.StreamingRecognitionResult()
+#
+# # streaming_recognize returns a generator.
+# responses = client.streaming_recognize(streaming_config, requests)
