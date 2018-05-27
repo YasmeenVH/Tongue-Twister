@@ -21,63 +21,61 @@
 	<section id="banner">
 		<div class="inner">
 			<h2>Select a Tongue Twister from Below</h2>
-				<h2>You clicked: <span id="clicked"></span></>
-					
-			<div class="listO">
-				<ul>
-					<li class="tt"><a href="#" data-label="clam">How can a clam cram in a clean cream can?</a></li>
-					<li class="tt"><a href="#" data-label="can">Can you can a can as a can opener can?</a></li>
-					<li class="tt"><a href="#" data-label="noisy">A noisy noise annoys an oyster</a></li>
-					<li class="tt"><a href="#" data-label="seashells">She sells sea shells by the seashore</a></li>
+			<h2>You clicked: <span id="clicked"></span></>
+
+				<div class="listO">
+					<ul>
+						<li class="tt"><a href="#" data-label="clam">How can a clam cram in a clean cream can?</a></li>
+						<li class="tt"><a href="#" data-label="can">Can you can a can as a can opener can?</a></li>
+						<li class="tt"><a href="#" data-label="noisy">A noisy noise annoys an oyster</a></li>
+						<li class="tt"><a href="#" data-label="seashells">She sells sea shells by the seashore</a></li>
+					</ul>
+
+
+				</div>
+				<button><span id="clickedTTShowRecord"></span></button> 
+				<button><span id="clickedTTShowStop"></span></button>
+				<ul class="actions">
+					<li><a href="/selectPage2" class="button big scrolly">Next Page</a></li>
+					<li><a href="/" class="button big scrolly">Home</a></li>
+
 				</ul>
-
-
 			</div>
-			<button><span id="clickedTTShowRecord"></span></button> 
-			<button><span id="clickedTTShowStop"></span></button>
-			<ul class="actions">
-				<li><a href="/selectPage2" class="button big scrolly">Next Page</a></li>
-				<li><a href="/" class="button big scrolly">Home</a></li>
+		</section>
 
-			</ul>
-		</div>
-	</section>
+		<script>
+			function sleep(ms) {
+				return new Promise(resolve => setTimeout(resolve, ms));
+			}
 
-	<script>
-		
+			$(".tt > a").on('click', function(e) {
+				var ttName = $(this).attr("data-label");
+				var clickedTT = $(this).text();
 
-		$(".tt > a").on('click', async function(e) {
-			var ttName = $(this).attr("data-label");
-			var clickedTT = $(this).text();
-			
-			$("#clicked").text(clickedTT);
-			
-			$.get("http://localhost:5000/get_audio?tt=" + ttName, function(data) {
-				console.log('inside callback function')
-				console.log(data.url)
-				var audioUrl = data.url
-				var audio = new Audio(audioUrl);
-				audio.play();
-				
+				$("#clicked").text(clickedTT);
+				$.get("http://localhost:5000/get_audio?tt=" + ttName,async function(data) {
+					console.log('inside callback function')
+					console.log(data.url)
+					var audioUrl = data.url
+					var audio = new Audio(audioUrl);
+					audio.play();
+					await sleep(10000);
+					$("#clickedTTShowRecord").text("Record");
+					$("#clickedTTShowStop").text("Stop Recording");
 
+
+
+
+				})
 
 			})
 
-		})
+			
 
-			$(".tt > a").on('click', function(e) {
-			$("#clickedTTShowRecord").text("Record");
-		})
-		
-			$(".tt > a").on('click', function(e) {
-			$("#clickedTTShowStop").text("Stop Recording");
-		
-		})
 
-		
-	</script>
-</body>
-</html>
+		</script>
+	</body>
+	</html>
 
 
 <!--
