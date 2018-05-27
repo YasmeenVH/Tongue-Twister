@@ -59,28 +59,32 @@
 		    }).then(function(stream) {
 		    	recorder = new MediaRecorder(stream);
 		    	recorder.addEventListener('dataavailable', onRecordingReady);
-		    	 console.log("!!!!!")
+		    	
 		    })
 
 		    function startRecording() {
 
 			  recorder.start();
-			  console.log("it works yay!!")
+			
 			}
 
 			function stopRecording() {
 
 			  // Stopping the recorder will eventually trigger the `dataavailable` event and we can complete the recording process
 			  recorder.stop();
-			   console.log("it also works yay!!")
+	
 			}
 
 			function onRecordingReady(e) {
 			  var audio = document.getElementById('audio');
+			  var blob = new Blob([e.data], { 'type' : 'audio/ogg; codecs=opus' });
 			  // e.data contains a blob representing the recording
-			  audio.src = URL.createObjectURL(e.data);
+			  audio.src = URL.createObjectURL(blob);
 			  audio.play();
-			   console.log("onRecordingReady")
+			  $.post('http://localhost:5000/process_audio', {
+			  	data: blob
+			  })
+			  console.log(audio.src);
 			}
 
 			$(".tt > a").on('click', function(e) {
@@ -94,7 +98,7 @@
 					var audioUrl = data.url
 					var audio = new Audio(audioUrl);
 					audio.play();
-					await sleep(10000);
+				//	await sleep(10000);
 					$("#clickedTTShowRecord").text("Record");
 					$("#clickedTTShowStop").text("Stop Recording");
 
