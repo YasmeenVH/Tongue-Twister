@@ -14,67 +14,6 @@ from pydub.silence import split_on_silence
 
 
 def speech_to_text(speech_file):
-    """Transcribe the given audio file."""
-    # client = speech.SpeechClient()
-    #
-    # config = types.RecognitionConfig(
-    #     encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
-    #     language_code='en-US',
-    #     sample_rate_hertz=18000,
-    #     speech_contexts=[speech.types.SpeechContext(
-    #         phrases=["sheshells", "sheshore"],
-    #     )]
-    # )
-    #
-    # file_name = os.path.join(
-    #     os.path.dirname(__file__),
-    #     'audio_files',
-    #     speech_file)
-    #
-    # with io.open(file_name, 'rb') as stream:
-    #     requests = [speech.types.StreamingRecognizeRequest(
-    #         audio_content=stream.read(),
-    #     )]
-    #
-    # streaming_config = types.StreamingRecognitionConfig(config=config,
-    #                                                     interim_results=True)
-    #
-    # responses = client.streaming_recognize(streaming_config, requests)
-    #
-    # i=0
-    # j=0
-    # k=0
-    #
-    # for response in responses:
-    #     print('#' * 20)
-    #     i=i+1
-    #     print("i : " + str(i))
-    #     for result in response.results:
-    #         j = j + 1
-    #         print("j : " + str(j))
-    #         print('*' * 20)
-    #         print('Finished: {}'.format(result.is_final))
-    #         print('Stability: {}'.format(result.stability))
-    #         for alternative in result.alternatives:
-    #             k = k + 1
-    #             print("k : " + str(k))
-    #             print('='*20)
-    #             print('Transcript: ' + alternative.transcript)
-    #             print('Confidence: '+ str(alternative.confidence))
-    #             print('is_final: ' + str(result.is_final))
-    #
-    #
-    #             for word_info in alternative.words:
-    #                 word = word_info.word
-    #                 start_time = word_info.start_time
-    #                 end_time = word_info.end_time
-    #                 print('Word: {}, start_time: {}, end_time: {}'.format(
-    #                     word,
-    #                     start_time.seconds + start_time.nanos * 1e-9,
-    #                     end_time.seconds + end_time.nanos * 1e-9))
-
-
-    # Instantiates a client
     client = speech.SpeechClient()
 
     file_name = os.path.join(
@@ -133,35 +72,31 @@ def speech_to_text(speech_file):
 
 
 def find_error(target, transcription, improve_sound):
-    if target != transcription:
-        return False
+    flat_list_transcribed = [item for sublist in transcription[1] for item in sublist]
+    flat_list_actual = [item for sublist in target[1] for item in sublist]
+    count_transcribed_1 = 0
+    count_actual_1 = 0
+    count_transcribed_2 = 0
+    count_actual_2 = 0
+    for word in flat_list_transcribed:
+        if improve_sound[0] in word:
+            count_transcribed_1 += 1
+        if improve_sound[1] in word:
+            count_transcribed_2 += 1
+    for word in flat_list_actual:
+        if improve_sound[0] in word:
+            count_actual_1 += 1
+        if improve_sound[1] in word:
+            count_actual_2 += 1
+    print([count_transcribed_1, count_transcribed_2, count_actual_1, count_actual_2])
+    return "Detected " + str(float(count_transcribed_1)/count_actual_1*100) + "% of desired " + improve_sound[0] + " and " + str(float(count_transcribed_2)/count_actual_2*100) + "% of desired " + improve_sound[1]
 
 
 
-# print(find_error('she sells seashells by the seashore', speech_to_text('correct.wav')))
+actual = speech_to_text('correct.wav')
+test = speech_to_text('wrong.wav')
 
-
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser(
-#         description=__doc__,
-#         formatter_class=argparse.RawDescriptionHelpFormatter)
-#     parser.add_argument('stream', help='File to stream to the API')
-#     args = parser.parse_args()
-#     print(args)
-#     speech_to_text(args.stream)
-res = speech_to_text('wrong.wav')
-print(res[0])
-print(" ")
-print(res[1])
-
-flat_list = [item for sublist in res[1] for item in sublist]
-
-print(" ")
-array_flat_list = np.array(flat_list)
-
-
-
-
+print(find_error(actual, test, ["sh", "se"]))
 
 
 # speech_contexts=[speech.types.SpeechContext(
@@ -181,7 +116,17 @@ array_flat_list = np.array(flat_list)
 # return result.alternatives[0].transcript
 
 
+# print(find_error('she sells seashells by the seashore', speech_to_text('correct.wav')))
 
+
+# if __name__ == '__main__':
+#     parser = argparse.ArgumentParser(
+#         description=__doc__,
+#         formatter_class=argparse.RawDescriptionHelpFormatter)
+#     parser.add_argument('stream', help='File to stream to the API')
+#     args = parser.parse_args()
+#     print(args)
+#     speech_to_text(args.stream)
 
 
 
@@ -216,3 +161,66 @@ array_flat_list = np.array(flat_list)
 #     out_file = "{}.wav".format(i)
 #     print("exporting", out_file)
 #     chunk.export(out_file, format="wav")
+
+
+# """Transcribe the given audio file."""
+# client = speech.SpeechClient()
+#
+# config = types.RecognitionConfig(
+#     encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+#     language_code='en-US',
+#     sample_rate_hertz=18000,
+#     speech_contexts=[speech.types.SpeechContext(
+#         phrases=["sheshells", "sheshore"],
+#     )]
+# )
+#
+# file_name = os.path.join(
+#     os.path.dirname(__file__),
+#     'audio_files',
+#     speech_file)
+#
+# with io.open(file_name, 'rb') as stream:
+#     requests = [speech.types.StreamingRecognizeRequest(
+#         audio_content=stream.read(),
+#     )]
+#
+# streaming_config = types.StreamingRecognitionConfig(config=config,
+#                                                     interim_results=True)
+#
+# responses = client.streaming_recognize(streaming_config, requests)
+#
+# i=0
+# j=0
+# k=0
+#
+# for response in responses:
+#     print('#' * 20)
+#     i=i+1
+#     print("i : " + str(i))
+#     for result in response.results:
+#         j = j + 1
+#         print("j : " + str(j))
+#         print('*' * 20)
+#         print('Finished: {}'.format(result.is_final))
+#         print('Stability: {}'.format(result.stability))
+#         for alternative in result.alternatives:
+#             k = k + 1
+#             print("k : " + str(k))
+#             print('='*20)
+#             print('Transcript: ' + alternative.transcript)
+#             print('Confidence: '+ str(alternative.confidence))
+#             print('is_final: ' + str(result.is_final))
+#
+#
+#             for word_info in alternative.words:
+#                 word = word_info.word
+#                 start_time = word_info.start_time
+#                 end_time = word_info.end_time
+#                 print('Word: {}, start_time: {}, end_time: {}'.format(
+#                     word,
+#                     start_time.seconds + start_time.nanos * 1e-9,
+#                     end_time.seconds + end_time.nanos * 1e-9))
+
+
+# Instantiates a client
