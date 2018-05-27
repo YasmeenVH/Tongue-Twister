@@ -46,14 +46,27 @@
 			var ttName = $(this).attr("data-label");
 			console.log(ttName)
 			$("#clicked").text(ttName);
-			$.get("https://localhost:5000/get_audio?tt=" + ttName, function(data) {
+		
+			$.get("http://localhost:5000/get_audio?tt=" + ttName, function(data) {
+				console.log('inside callback function')
+				console.log(data.url)
 				var audioUrl = data.url
 				var audio = new Audio(audioUrl);
 				audio.play();
 
 			})
-		})
 
+		})
+		
 	</script>
 </body>
 </html>
+
+
+<!--
+data: {
+	tt: clam
+	url: 'localhost:5000/get_audio?tt=clam'
+}
+
+-->

@@ -9,16 +9,17 @@ app = Flask(__name__)
 def getAudio():
     tt = request.args.get('tt', '')
     if tt == "clam":
-        audioLink = "https://github.com/anna-ilina/ai-tongue-twisters/blob/master/static/index_files/clam.wav"
+        #audioLink = "https://github.com/anna-ilina/ai-tongue-twisters/blob/master/static/index_files/clam.wav"
+        audioLink = "https://raw.githubusercontent.com/anna-ilina/ai-tongue-twisters/master/static/index_files/clam.wav"
         return jsonify({"url":audioLink})
     elif tt == "can":
-        audioLink = "https://github.com/anna-ilina/ai-tongue-twisters/blob/master/audio_files/can.wav"
+        audioLink = "https://raw.githubusercontent.com/anna-ilina/ai-tongue-twisters/master/audio_files/can.wav"
         return jsonify({"url":audioLink})
     elif tt == "noisy":
-        audioLink = "https://github.com/anna-ilina/ai-tongue-twisters/blob/master/audio_files/noisy.wav"
+        audioLink = "https://raw.githubusercontent.com/anna-ilina/ai-tongue-twisters/master/audio_files/noisy.wav"
         return jsonify({"url":audioLink})
     elif tt == "seashells":
-        audioLink = "https://github.com/anna-ilina/ai-tongue-twisters/blob/master/audio_files/sea%20shells.wav"
+        audioLink = "https://raw.githubusercontent.com/anna-ilina/ai-tongue-twisters/master/audio_files/sea%20shells.wav"
         return jsonify({"url":audioLink})
     else:
         audioLink = ""
