@@ -134,11 +134,11 @@ def find_error(target, transcription, improve_sound):
                 #         end_time.seconds + end_time.nanos * 1e-9))
 
 
-
-actual = speech_to_text('correct.wav')
-test = speech_to_text('wrong.wav')
-
-print(find_error(actual, test, ["sh", "se"]))
+#
+# actual = speech_to_text('correct.wav')
+# test = speech_to_text('wrong.wav')
+#
+# print(find_error(actual, test, ["sh", "se"]))
 # sound_file=AudioSegment.from_wav(file_name)
 # # samples = np.array(sound_file.get_array_of_samples())
 # #

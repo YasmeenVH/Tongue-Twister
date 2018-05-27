@@ -53,7 +53,14 @@ def processAudio():
 
     #[result_string, result_array] = speech_to_text(os.path.join("audio_files", "sea shells.wav")) 
 
-    result = find_error(tt, [result_string, result_array], "sh")
+    actual = speech_to_text('correct.wav')
+    test = speech_to_text('wrong.wav')
+
+    result = find_error(actual, test, ["sh", "se"])
+
+    # result = find_error(tt, [result_string, result_array], "sh")
+
+    return jsonify({"text":result})
 
 
 
