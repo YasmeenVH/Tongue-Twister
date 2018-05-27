@@ -21,7 +21,8 @@
 	<section id="banner">
 		<div class="inner">
 			<h2>Select a Tongue Twister from Below</h2>
-
+				<h2>You clicked: <span id="clicked"></span></>
+					
 			<div class="listO">
 				<ul>
 					<li class="tt"><a href="#" data-label="clam">How can a clam cram in a clean cream can?</a></li>
@@ -32,7 +33,8 @@
 
 
 			</div>
-
+			<button><span id="clickedTTShowRecord"></span></button> 
+			<button><span id="clickedTTShowStop"></span></button>
 			<ul class="actions">
 				<li><a href="/selectPage2" class="button big scrolly">Next Page</a></li>
 				<li><a href="/" class="button big scrolly">Home</a></li>
@@ -42,21 +44,36 @@
 	</section>
 
 	<script>
-		$(".tt > a").on('click', function(e) {
-			var ttName = $(this).attr("data-label");
-			console.log(ttName)
-			$("#clicked").text(ttName);
 		
+
+		$(".tt > a").on('click', async function(e) {
+			var ttName = $(this).attr("data-label");
+			var clickedTT = $(this).text();
+			
+			$("#clicked").text(clickedTT);
+			
 			$.get("http://localhost:5000/get_audio?tt=" + ttName, function(data) {
 				console.log('inside callback function')
 				console.log(data.url)
 				var audioUrl = data.url
 				var audio = new Audio(audioUrl);
 				audio.play();
+				
+
 
 			})
 
 		})
+
+			$(".tt > a").on('click', function(e) {
+			$("#clickedTTShowRecord").text("Record");
+		})
+		
+			$(".tt > a").on('click', function(e) {
+			$("#clickedTTShowStop").text("Stop Recording");
+		
+		})
+
 		
 	</script>
 </body>
