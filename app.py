@@ -18,7 +18,7 @@ def getAudio():
         audioLink = "https://github.com/anna-ilina/ai-tongue-twisters/blob/master/audio_files/noisy.wav"
         return jsonify({"url":audioLink})
     elif tt == "seashells":
-        audioLink = https://github.com/anna-ilina/ai-tongue-twisters/blob/master/audio_files/sea%20shells.wav
+        audioLink = "https://github.com/anna-ilina/ai-tongue-twisters/blob/master/audio_files/sea%20shells.wav"
         return jsonify({"url":audioLink})
     else:
         audioLink = ""
