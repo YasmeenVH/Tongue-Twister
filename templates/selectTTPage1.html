@@ -26,8 +26,8 @@
 				<ul>
 					<li class="tt"><a href="#" data-label="clam">How can a clam cram in a clean cream can?</a></li>
 					<li class="tt"><a href="#" data-label="can">Can you can a can as a can opener can?</a></li>
-					<li class="tt"><a href="#" data-label="noisy">A noisy noise annoys an oyster.</a></li>
-					<li class="tt"><a href="#" data-label="seashells">She sells sea shells by the seashore.</a></li>
+					<li class="tt"><a href="#" data-label="noisy">A noisy noise annoys an oyster</a></li>
+					<li class="tt"><a href="#" data-label="seashells">She sells sea shells by the seashore</a></li>
 				</ul>
 
 
@@ -46,7 +46,10 @@
 			var ttName = $(this).attr("data-label");
 			console.log(ttName)
 			$("#clicked").text(ttName);
-			$.get("https://ai-tongue-twisters.herokuapp.com/get_audio?tt=" + ttName, function(data) {
+			$.get("https://localhost:5000/get_audio?tt=" + ttName, function(data) {
+				var audioUrl = data.url
+				var audio = new Audio(audioUrl);
+				audio.play();
 
 			})
 		})
